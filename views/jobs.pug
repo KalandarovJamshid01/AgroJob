@@ -52,11 +52,11 @@ block content
                                                     p.text-info.d-inline-block(style='font-size: 16px; font-weight: 600')= job.district[0].name_uz 
                                         small
                                             strong(title='Posted on')
-                                                i.fa.fa-calendar
-                                                p.text-secondary.d-inline-block(style='font-size: 16px')= job.createdAt
+                                                i.fa.fa-calendar(style='font-size: 16px')
+                                                p.pl-1.text-secondary.d-inline-block(style='font-size: 16px')= job.time
                                             strong(title='Location')
                                                 i.fa.fa-map-marker
-                                                p.text-secondary.d-inline-block(style='font-size: 16px;font-weight: 600')= job.region[0].name_uz
+                                                    p.pl-1.text-secondary.d-inline-block(style='font-size: 16px;font-weight: 600')= job.region[0].name_uz
                 .col-md-12
                     ul.pages
                         li.active

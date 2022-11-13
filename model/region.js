@@ -13,6 +13,9 @@ const regionSchema = mongoose.Schema(
   }
 );
 
+
+
+
 regionSchema.virtual("districts", {
   ref: "districts",
   foreignField: "region_id",

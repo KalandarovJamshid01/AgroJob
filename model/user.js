@@ -43,14 +43,22 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "user",
     },
+    time: {
+      type: String,
+    },
   },
   {
-
     timestamps: true,
   }
 );
 
-
+userSchema.pre("save", function (next) {
+  const month = this.createdAt.getUTCMonth() + 1;
+  const day = this.createdAt.getUTCDate();
+  const year = this.createdAt.getUTCFullYear();
+  this.time = day + "." + month + "." + year;
+  next();
+});
 const User = mongoose.model("users", userSchema);
 
 module.exports = User;

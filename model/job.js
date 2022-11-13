@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment-timezone");
 const jobSchema = mongoose.Schema(
   {
     title: {
@@ -34,6 +35,9 @@ const jobSchema = mongoose.Schema(
       type: String,
       default: "user",
     },
+    time: {
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -41,6 +45,14 @@ const jobSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+jobSchema.pre("save", function (next) {
+  const month = this.createdAt.getUTCMonth() + 1;
+  const day = this.createdAt.getUTCDate();
+  const year = this.createdAt.getUTCFullYear();
+  this.time = day + "." + month + "." + year;
+  next();
+});
 
 jobSchema.virtual("user", {
   ref: "users",
@@ -62,7 +74,6 @@ jobSchema.virtual("district", {
   localField: "districtId",
   foreignField: "_id",
 });
-
 
 const Job = mongoose.model("jobs", jobSchema);
 

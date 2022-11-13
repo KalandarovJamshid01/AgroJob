@@ -15,14 +15,14 @@ block content
         .col-md-8.col-sm-8
           p.lead
             i.fa.fa-map-marker
-            span.d-inline-block=job.region[0].name_uz
-            i.fa.fa-calendar
-            span.d-inline-block=job.createdAt
+            span.d-inline-block=`${job.region[0].name_uz}`
+            i.fa.fa-calendar.pl-5
+            span.d-inline-block=job.time
           br
           br
           .form-group
-            h5= job.title
-          p= job.body
+            h4.text-secondary= job.title
+          p.text-secondary(style='font-size:16px; font-weight:500')= job.body
           br
           br
           .table-responsive-xs.table-responsive-sm
@@ -37,7 +37,7 @@ block content
                           tr
                               td= appliedUser.users[0].name
                               td= appliedUser.users[0].phone
-                              td= appliedUser.createdAt
+                              td= appliedUser.time
         .col-md-4
           .section-heading
             h2 Contact Details

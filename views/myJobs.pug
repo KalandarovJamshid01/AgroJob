@@ -65,13 +65,13 @@ block content
                                     strong
                                         i.fa.fa-building(style='font-size: 16px')
                                         p.text-info.d-inline-block(style='font-size: 16px; font-weight: 600')= job.district[0].name_uz 
-                            small
-                                strong(title='Posted on')
-                                    i.fa.fa-calendar
-                                    p.text-secondary.d-inline-block(style='font-size: 16px')= job.createdAt
-                                strong(title='Location')
-                                    i.fa.fa-map-marker
-                                    p.text-secondary.d-inline-block(style='font-size: 16px;font-weight: 600')= job.region[0].name_uz
+                                    small
+                                        strong(title='Posted on')
+                                            i.d-block.fa.fa-calendar(style='font-size: 16px')
+                                                p.pl-1.text-secondary.d-inline-block(style='font-size: 16px;font-weight:500')= job.time
+                                        strong(title='Location')
+                                            i.fa.fa-map-marker
+                                                p.pl-1.text-secondary.d-inline-block(style='font-size: 16px;font-weight: 600')= job.region[0].name_uz
                         .row.px-3.g-3.justify-content-between.editContent 
                             button.updateJob.btn-warning.col-5.rounded.rounded-5(value=`${job._id}`) Update
                             button.deleteJob.btn-danger.col-5.rounded.rounded-5(value=`${job._id}`) Delete

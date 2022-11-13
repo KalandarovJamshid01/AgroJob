@@ -11,6 +11,9 @@ const typeSchema = new mongoose.Schema(
       ref: "users",
       required: true,
     },
+    time: {
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -18,6 +21,14 @@ const typeSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+typeSchema.pre("save", function (next) {
+  const month = this.createdAt.getUTCMonth() + 1;
+  const day = this.createdAt.getUTCDate();
+  const year = this.createdAt.getUTCFullYear();
+  this.time = day + "." + month + "." + year;
+  next();
+});
+
 typeSchema.virtual("users", {
   ref: "users",
   foreignField: "_id",
