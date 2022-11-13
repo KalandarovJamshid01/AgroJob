@@ -2,6 +2,8 @@ const router = require("express").Router();
 const view = require("./../controller/view");
 router.route("/home").get(view.home);
 router.route("/jobs").get(view.jobs);
+router.route("/myregion").get(view.jobRegion)
+router.route("/mydistrict").get(view.jobDistrict)
 router.route("/contact").get(view.contact);
 router.route("/register").get(view.register);
 router.route("/login").get(view.login);

@@ -1,37 +1,37 @@
-const path = require("path");
 const multer = require("multer");
 const sharp = require("sharp");
 
 const multerStorage = multer.memoryStorage();
 
-const multerFilter = (req, file, cb) => {
+const filterImage = (req, file, cb) => {
+  console.log(file, "Manabu ekan");
   if (file.mimetype.startsWith("image")) {
-    return cb(null, true);
+    req.file = file;
+    cb(null, true);
   } else {
-    return cb(new AppError("You only upload images!", 400));
+    cb(new AppError("You must upload only image format", 400), false);
   }
 };
-
 const upload = multer({
   storage: multerStorage,
-  fileFilter: multerFilter,
+  fileFilter: filterImage,
 });
 
-const uploadImage = upload.single("photo");
+const uploadImageUser = upload.single("photo");
 
-const resize = (req, res, next) => {
-  console.log("sddfsfsf:" + req.file);
+const resizeImage = async (req, res, next) => {
+  console.log(!req.file, "men");
   if (!req.file) {
     return next();
   }
-  console.log("Hello");
-  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
-  sharp(req.file.buffer)
+  const ext = req.file.mimetype.split("/")[1];
+
+  req.file.filename = `user-${req.user.id}-${Date.now()}.${ext}`;
+  await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat("jpeg")
-    .jpeg()
-    .toFile("public/img/users");
+    .toFile(`${__dirname}/../public/img/${req.file.filename}`);
   next();
 };
 
-module.exports = { uploadImage, resize };
+module.exports = { resizeImage, uploadImageUser };

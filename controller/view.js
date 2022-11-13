@@ -155,6 +155,7 @@ const logout = async (req, res, next) => {
 
 const createJob = async (req, res, next) => {
   let user = await userRole(req, res, next);
+
   const regions = await Region.find().populate({
     path: "districts",
     select: "name_uz _id",
@@ -175,7 +176,6 @@ const createJob = async (req, res, next) => {
 const createType = async (req, res, next) => {
   try {
     let user = await userRole(req, res, next);
-
     const types = await Type.find().populate({
       path: "users",
       select: "name createdAt",
@@ -222,6 +222,57 @@ const myJobs = async (req, res, next) => {
     console.log(error);
   }
 };
+
+const jobRegion = async (req, res, next) => {
+  try {
+    let user = await userRole(req, res, next);
+    const jobs = await Job.find({ regionId: user.regionId })
+      .populate({
+        path: "region",
+        select: "name_uz",
+      })
+      .populate({
+        path: "district",
+        select: "name_uz",
+      })
+      .populate({
+        path: "type",
+        select: "name",
+      });
+    console.log(jobs);
+    res.render("jobRegion", {
+      user,
+      jobs,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const jobDistrict = async (req, res, next) => {
+  try {
+    let user = await userRole(req, res, next);
+    const jobs = await Job.find({ districtId: user.districtId })
+      .populate({
+        path: "region",
+        select: "name_uz",
+      })
+      .populate({
+        path: "district",
+        select: "name_uz",
+      })
+      .populate({
+        path: "type",
+        select: "name",
+      });
+    console.log(jobs);
+    res.render("jobDistrict", {
+      user,
+      jobs,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   home,
   jobs,
@@ -233,4 +284,6 @@ module.exports = {
   createJob,
   createType,
   myJobs,
+  jobRegion,
+  jobDistrict,
 };
