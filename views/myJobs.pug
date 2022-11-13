@@ -8,31 +8,75 @@ block content
                     a(href='/jobs')
                         | ko&apos;proq ko&apos;rish
                         i.fa.fa-angle-right
-            each job in jobs
-                .col-md-4
-                    .product-item
-                        a(href=`/${job._id}`)
-                            img.img-fluid(src=`${job.photo}` alt='okay')
-                        .down-content
-                            a(href=`/jobs/${job_id}`)
-                                h4= job.title
-                            h6= `${job.price} $`
-                            h4
-                                small
-                                    i.fa.fa-briefcase
-                                        p.text-success.d-inline-block= job.type[0].name
-                                    br
-                                    strong
-                                        i.fa.fa-building
-                                            p.text-success.d-inline-block= job.district[0].name_uz 
+    .container
+        form.jobForm.d-none.pt-5(action='')
+            .row.gap-3.justify-content-lg-around
+                .form-group.col-lg-5.col-sm-12
+                    label(for='name')
+                        | Nomi 
+                        span.text-danger (Required)
+                    input.jobName.form-control(type='text' required='')
+                input.userType.d-none(type="text" value=`${user._id}`)
+                .form-group.col-lg-5.col-sm-12
+                    label(for='surname')
+                        | Ish turi 
+                        span.text-danger (Required)
+                    select.jobType.form-control(name='' id='')
+                        each jobType in jobTypes 
+                            option(value=`${jobType._id}`)= jobType.name 
+                .form-group.col-lg-5.col-sm-12
+                    label(for='surname')
+                        | Viloyatingiz
+                        span.text-danger (Required)
+                    select.form-control(name='' id='regionInput')
+                        each region in regions
+                            option(value=`${region._id}`)= region.name_uz
+                .form-group.col-lg-5.col-sm-12
+                    label(for='surname')
+                        | Tumaningiz 
+                        span.text-danger (Required)
+                    select.form-control(name='' id='districtInput')
+                .form-group.col-lg-5.col-sm-12
+                    label(for='direction')
+                        | Narxi 
+                        span.text-danger (Required)
+                    input.priceJob.form-control(type='number' required='')
+                .form-group.col-lg-5.col-sm-12
+                    label(for='surname')
+                        | Rasm 
+                    input.photoJob.form-control(type="file")
+                .form-group.col-lg-5.col-sm-12
+                    label(for='surname')
+                        | Ish haqida 
+                        span.text-danger (Required)
+                    textarea.jobContent.form-control(type="text") 
+                .form-group.col-lg-5.col-sm-12.d-flex.align-items-end.justify-content-end.pb-3
+                    button.btn.btn-warning(type='submit') O'zgartirish
+        each job in jobs
+            .col-md-4
+                .product-item
+                    a(href=`/${job._id}`)
+                        img.img-fluid(src=`${job.photo}` alt='okay')
+                    .down-content
+                        a(href=`/jobs/${job_id}`)
+                            h4= job.title
+                        h6= `${job.price} $`
+                        h4
                             small
-                                strong(title='Posted on')
-                                    i.fa.fa-calendar
-                                        p.text-success.d-inline-block= job.createdAt
-                                strong(title='Location')
-                                    i.fa.fa-map-marker
-                                        p.text-success.d-inline-block= job.region[0].name_uz
-                    .row.px-3.g-3.justify-content-between 
-                        button.updateJob.btn-warning.col-5.rounded.rounded-5(value=`${job._id}`) Update
-                        button.deleteJob.btn-danger.col-5.rounded.rounded-5(value=`${job._id}`) Delete
+                                i.fa.fa-briefcase
+                                    p.text-success.d-inline-block= job.type[0].name
+                                br
+                                strong
+                                    i.fa.fa-building
+                                        p.text-success.d-inline-block= job.district[0].name_uz 
+                        small
+                            strong(title='Posted on')
+                                i.fa.fa-calendar
+                                    p.text-success.d-inline-block= job.createdAt
+                            strong(title='Location')
+                                i.fa.fa-map-marker
+                                    p.text-success.d-inline-block= job.region[0].name_uz
+                .row.px-3.g-3.justify-content-between.editContent 
+                    button.updateJob.btn-warning.col-5.rounded.rounded-5(value=`${job._id}`) Update
+                    button.deleteJob.btn-danger.col-5.rounded.rounded-5(value=`${job._id}`) Delete
     script(src="assets/js/myjobs.js") 

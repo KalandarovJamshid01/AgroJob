@@ -6,7 +6,7 @@ router.route("/").get(job.getAll).post(verify, job.add);
 
 router
   .route("/:id")
-  .get(job.getAll)
+  .get(job.getOne)
   .patch(verify, job.update)
   .delete(verify, job.deletejob);
 

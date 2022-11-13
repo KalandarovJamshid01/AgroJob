@@ -43,6 +43,7 @@ const home = async (req, res, next) => {
       })
       .limit(6);
 
+    console.log(jobs);
     res.render("home", {
       user,
       jobs,
@@ -205,11 +206,20 @@ const myJobs = async (req, res, next) => {
         path: "type",
         select: "name",
       });
+    const regions = await Region.find().populate({
+      path: "districts",
+      select: "name_uz _id",
+    });
+
+    const jobTypes = await Type.find();
 
     res.render("myJobs", {
       user,
       jobs,
+      regions,
+      jobTypes,
     });
+    console.log(user, jobs);
   } catch (error) {
     console.log(error);
   }
