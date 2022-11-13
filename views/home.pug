@@ -27,74 +27,30 @@ block content
                         a(href='/jobs')
                             | ko&apos;proq ko&apos;rish
                             i.fa.fa-angle-right
-                .col-md-4
-                    .product-item
-                        a(href='job-details.html')
-                            img.img-fluid(src='assets/images/product-1-370x270.jpg' alt='')
-                        .down-content
-                            a(href='job-details.html')
-                                h4 O&apos;simliklarga yetishtirish
-                            h6 $500
-                            h4
-                            small
-                                i.fa.fa-briefcase
-                                |  Agrar / Dalada
-                                br
-                                strong
-                                i.fa.fa-building
-                                |  Yunusobod tumani
-                            small
-                                strong(title='Posted on')
-                                    i.fa.fa-calendar
-                                    |  11-11-2022
-                                strong(title='Location')
-                                    i.fa.fa-map-marker
-                                    | Toshkent shahri
-                .col-md-4
-                    .product-item
-                        img.img-fluid(src='assets/images/product-2-370x270.jpg' alt='')
-                        .down-content
-                            a(href='job-details.html')
-                                h4 Dalalarga o&apos;g&apos;it sepish
-                            h6 $600
-                            h4
-                            small
-                                i.fa.fa-briefcase
-                                |  Agrar / Dalada
-                                br
-                                strong
-                                i.fa.fa-building
-                                |  Qo&apos;shrobot tumani
-                            small
-                                strong(title='Posted on')
-                                    i.fa.fa-calendar
-                                    |  12-11-2022
-                                strong(title='Location')
-                                    i.fa.fa-map-marker
-                                    |  Samarqand viloyati
-                .col-md-4
-                    .product-item
-                        a(href='job-details.html')
-                            img(src='assets/images/product-3-370x270.jpg' alt='')
-                        .down-content
-                            a(href='job-details.html')
-                                h4 Hosilni yig&apos;ishtirish
-                            h6 $600
-                            h4
-                            small
-                                i.fa.fa-briefcase
-                                |  Agrar / Dalada
-                                br
-                                strong
-                                i.fa.fa-building
-                                |  Yangiariq tumani
-                            small
-                                strong(title='Posted on')
-                                    i.fa.fa-calendar
-                                    |  13-12-2022
-                                strong(title='Location')
-                                    i.fa.fa-map-marker
-                                    |  Xorazm viloyati
+                each job in jobs
+                    .col-md-4
+                        .product-item
+                            a(href=`/${job._id}`)
+                                img.img-fluid(src=`${job.photo}` alt='okay')
+                            .down-content
+                                a(href=`/jobs/${job_id}`)
+                                    h4= job.title
+                                h6= `${job.price} $`
+                                h4
+                                    small
+                                        i.fa.fa-briefcase
+                                            p.text-success.d-inline-block= job.type[0].name
+                                        br
+                                        strong
+                                            i.fa.fa-building
+                                                p.text-success.d-inline-block= job.district[0].name_uz 
+                                small
+                                    strong(title='Posted on')
+                                        i.fa.fa-calendar
+                                            p.text-success.d-inline-block= job.createdAt
+                                    strong(title='Location')
+                                        i.fa.fa-map-marker
+                                            p.text-success.d-inline-block= job.region[0].name_uz
     .best-features
         .container
             .row

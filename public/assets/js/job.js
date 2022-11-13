@@ -12,13 +12,13 @@ const apply = async (jobId, userId) => {
     if (res.status === 201) {
       alert("You applied successfully");
       window.setTimeout(() => {
-        location.assign("/home");
+        location.reload();
       }, 1000);
     } else {
       alert("Xatolik yuz berdi");
-      //   window.setTimeout(() => {
-      //     location.reload();
-      //   }, 1000);
+      window.setTimeout(() => {
+        location.reload();
+      }, 1000);
     }
   } catch (err) {
     console.log(err.response);

@@ -25,11 +25,19 @@ block content
           p= job.body
           br
           br
-
-
-
-
-          
+          .table-responsive-xs.table-responsive-sm
+              table.table.align-middle.mb-0.bg-white
+                  thead.bg-light
+                      tr
+                          th Ismi
+                          th Telefon nomeri
+                          th Murojaat vaqti
+                  tbody.table-column
+                      each appliedUser in appliedUsers
+                          tr
+                              td= appliedUser.users[0].name
+                              td= appliedUser.users[0].phone
+                              td= appliedUser.createdAt
         .col-md-4
           .section-heading
             h2 Contact Details
@@ -51,7 +59,7 @@ block content
           .left-content.mt-2
             .contact-form
               form.applyForm.form-group
-                button.jobApply.filled-button.btn-block(type='submit' value=`${user._id}`)
+                button.jobApply.filled-button.btn-block(type='submit' value=`${job._id}`)
                   | Apply for this job
                 input.userApply.d-none(type="text" value=`${user._id}`)
             div

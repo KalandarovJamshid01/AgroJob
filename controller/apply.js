@@ -3,11 +3,12 @@ const Apply = require("./../model/apply");
 
 const getAll = async (req, res, next) => {
   try {
-    const applies = await Apply.findById({ jobId: req.params.id });
+    console.log(req.params.jobId);
+    const applies = await Apply.find({ jobId: req.params.jobId });
 
     res.status(200).json(applies);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 

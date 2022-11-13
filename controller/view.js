@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const Job = require("../model/job");
 const Type = require("./../model/jobType");
 const District = require("./../model/district");
-const axios = require("axios");
+const Apply = require("./../model/apply");
 const userRole = async (req, res, next) => {
   let user;
 
@@ -28,10 +28,24 @@ const home = async (req, res, next) => {
   try {
     let user = await userRole(req, res, next);
 
-    const works = await Job.find().limit(6);
+    const jobs = await Job.find()
+      .populate({
+        path: "region",
+        select: "name_uz",
+      })
+      .populate({
+        path: "district",
+        select: "name_uz",
+      })
+      .populate({
+        path: "type",
+        select: "name",
+      })
+      .limit(6);
 
     res.render("home", {
       user,
+      jobs,
     });
   } catch (error) {
     console.log(error);
@@ -80,8 +94,14 @@ const jobDetail = async (req, res, next) => {
         select: "name",
       })
       .populate({ path: "user" });
+    const appliedUsers = await Apply.find({ jobId: req.params.jobId }).populate(
+      {
+        path: "users",
+        select: "name phone",
+      }
+    );
     let user = await userRole(req, res, next);
-    res.render("jobDetail", { user, job });
+    res.render("jobDetail", { user, job, appliedUsers });
   } catch (error) {
     console.log(error);
   }
@@ -168,6 +188,32 @@ const createType = async (req, res, next) => {
     console.log(error);
   }
 };
+
+const myJobs = async (req, res, next) => {
+  try {
+    let user = await userRole(req, res, next);
+    const jobs = await Job.find()
+      .populate({
+        path: "region",
+        select: "name_uz",
+      })
+      .populate({
+        path: "district",
+        select: "name_uz",
+      })
+      .populate({
+        path: "type",
+        select: "name",
+      });
+
+    res.render("myJobs", {
+      user,
+      jobs,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   home,
   jobs,
@@ -178,4 +224,5 @@ module.exports = {
   logout,
   createJob,
   createType,
+  myJobs,
 };

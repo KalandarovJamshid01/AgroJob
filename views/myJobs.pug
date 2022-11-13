@@ -1,0 +1,38 @@
+extends base 
+block content 
+    .container
+        .row
+            .col-md-12
+                .section-heading
+                    h2 Zo&apos;r Ishlar
+                    a(href='/jobs')
+                        | ko&apos;proq ko&apos;rish
+                        i.fa.fa-angle-right
+            each job in jobs
+                .col-md-4
+                    .product-item
+                        a(href=`/${job._id}`)
+                            img.img-fluid(src=`${job.photo}` alt='okay')
+                        .down-content
+                            a(href=`/jobs/${job_id}`)
+                                h4= job.title
+                            h6= `${job.price} $`
+                            h4
+                                small
+                                    i.fa.fa-briefcase
+                                        p.text-success.d-inline-block= job.type[0].name
+                                    br
+                                    strong
+                                        i.fa.fa-building
+                                            p.text-success.d-inline-block= job.district[0].name_uz 
+                            small
+                                strong(title='Posted on')
+                                    i.fa.fa-calendar
+                                        p.text-success.d-inline-block= job.createdAt
+                                strong(title='Location')
+                                    i.fa.fa-map-marker
+                                        p.text-success.d-inline-block= job.region[0].name_uz
+                    .row.px-3.g-3.justify-content-between 
+                        button.updateJob.btn-warning.col-5.rounded.rounded-5 Update
+                        button.deleteJobJob.btn-danger.col-5.rounded.rounded-5 Delete
+    script(src="assets/js/myjobs.js") 

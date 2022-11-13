@@ -8,6 +8,7 @@ router.route("/login").get(view.login);
 router.route("/createJob").get(view.createJob);
 router.route("/logout").get(view.logout);
 router.route("/createType").get(view.createType);
+router.route("/myjobs").get(view.myJobs)
 router.route("/:jobId").get(view.jobDetail);
 
 module.exports = router;
