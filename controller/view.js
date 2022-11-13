@@ -66,11 +66,22 @@ const jobs = async (req, res, next) => {
 
 const jobDetail = async (req, res, next) => {
   try {
-
-   
-
+    const job = await Job.findById(req.params.jobId)
+      .populate({
+        path: "region",
+        select: "name_uz",
+      })
+      .populate({
+        path: "district",
+        select: "name_uz",
+      })
+      .populate({
+        path: "type",
+        select: "name",
+      })
+      .populate({ path: "user" });
     let user = await userRole(req, res, next);
-    res.render("jobDetail", { user });
+    res.render("jobDetail", { user, job });
   } catch (error) {
     console.log(error);
   }

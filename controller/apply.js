@@ -13,6 +13,7 @@ const getAll = async (req, res, next) => {
 
 const add = async (req, res, next) => {
   try {
+    console.log(req.body);
     const apply = await Apply.create({
       userId: req.user.id,
       jobId: req.params.jobId,
