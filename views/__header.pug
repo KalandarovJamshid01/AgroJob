@@ -1,5 +1,6 @@
 if user
-  if user.role= "employer"
+  -console.log(user.role)
+  if (user.role=="employer")
     header
       nav.navbar.navbar-expand-lg
         .container-fluid
@@ -26,8 +27,8 @@ if user
               li.nav-item
                 a.nav-link(href='/contact') Aloqa
               li.nav-item
-                a.nav-link(href='/logout') Ishchi 
-  else if user.role= "worker"
+                a.nav-link(href='/logout') Chiqish 
+  else if (user.role=="worker")
     header
       nav.navbar.navbar-expand-lg
         .container
@@ -48,7 +49,7 @@ if user
               li.nav-item
                 a.nav-link(href='/contact') Aloqa
               li.nav-item
-                a.nav-link(href='/logout') ishchi 
+                a.nav-link(href='/logout') Chiqish 
 else        
   header
     nav.navbar.navbar-expand-lg

@@ -92,7 +92,10 @@ const updateJob = async (
       }, 1000);
     }
   } catch (err) {
-    console.log(err.response);
+    alert("Xatolik yuz berdi");
+    window.setTimeout(() => {
+      location.reload();
+    }, 1000);
   }
 };
 
@@ -116,7 +119,7 @@ editContent.addEventListener("click", async (e) => {
       document.querySelector(".userType").value = job.data.userId;
       document.querySelector(".jobType").value = job.data.typeId;
       region.value = job.data.regionId;
-      district.value = job.data.typeId;
+      district.value = job.data.districtId;
       jobForm.value = value;
       document.querySelector(".photoJob").value = job.data.photo;
     } catch (err) {

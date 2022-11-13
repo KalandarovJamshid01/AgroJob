@@ -15,7 +15,12 @@ const login = async (email, password) => {
       }, 1000);
     }
   } catch (err) {
-    console.log(err.response);
+    alert(
+      "Bunday user topilmadi, Iltimos ma'lumotlarni to'g'ri kiriting, yoki ro'yxatdan o'ring"
+    );
+    window.setTimeout(() => {
+      location.reload();
+    }, 1000);
   }
 };
 

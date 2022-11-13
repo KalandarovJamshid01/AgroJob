@@ -14,14 +14,17 @@ const apply = async (jobId, userId) => {
       window.setTimeout(() => {
         location.reload();
       }, 1000);
-    } else {
-      alert("Xatolik yuz berdi");
+    } else if (res.status === 404) {
+      alert("Murojat qilish uchun iltimos ro'yxatdan o'ting");
       window.setTimeout(() => {
         location.reload();
       }, 1000);
     }
   } catch (err) {
-    console.log(err.response);
+    alert("Murojat qilish uchun iltimos ro'yxatdan o'ting");
+    window.setTimeout(() => {
+      location.reload();
+    }, 1000);
   }
 };
 

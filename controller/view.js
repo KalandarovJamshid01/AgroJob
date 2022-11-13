@@ -16,6 +16,7 @@ const userRole = async (req, res, next) => {
       req.user = user;
     });
     user = await User.findById(req.user.id);
+    console.log(typeof user.role);
 
     return user;
   } else {
@@ -43,7 +44,6 @@ const home = async (req, res, next) => {
       })
       .limit(6);
 
-    console.log(jobs);
     res.render("home", {
       user,
       jobs,
@@ -193,7 +193,7 @@ const createType = async (req, res, next) => {
 const myJobs = async (req, res, next) => {
   try {
     let user = await userRole(req, res, next);
-    const jobs = await Job.find()
+    const jobs = await Job.find({ userId: req.user.id })
       .populate({
         path: "region",
         select: "name_uz",
@@ -212,14 +212,12 @@ const myJobs = async (req, res, next) => {
     });
 
     const jobTypes = await Type.find();
-
     res.render("myJobs", {
       user,
       jobs,
       regions,
       jobTypes,
     });
-    console.log(user, jobs);
   } catch (error) {
     console.log(error);
   }

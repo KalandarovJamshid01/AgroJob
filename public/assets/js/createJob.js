@@ -46,13 +46,13 @@ const addJob = async (
     });
     console.log(res);
     if (res.status === 201) {
-      alert("Siz ro`yxatdan o`tdingiz. Telegram kanalimizga qo`shiling");
+      alert("Ish yaratildi");
       window.setTimeout(() => {
-        location.assign("http://127.0.0.1:8000/jobs");
+        location.assign("http://127.0.0.1:8000/myJobs");
       }, 1000);
     } else {
       console.log(err.response.data.message);
-      alert(`Xatolik yuz berdi.200 emas
+      alert(`Xatolik yuz berdi.
     Error: ${err.response.data.message}`);
     }
   } catch (err) {
