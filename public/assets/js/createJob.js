@@ -47,7 +47,10 @@ const addJob = async (
     const res = await axios({
       method: "POST",
       url: "http://127.0.0.1:8000/api/v1/jobs/",
-      Headers:{"Content-Type":"multipart/form-data"},
+      Headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+      },
       formData,
     });
     console.log(res);

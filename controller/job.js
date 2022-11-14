@@ -3,7 +3,7 @@ const Job = require("./../model/job");
 const AppError = require("./../utility/appError");
 
 const add = async (req, res, next) => {
-  console.log(req.file);
+  console.log(req.files + "...............");
   const job = await Job.create({
     ...req.body,
     photo: req.file.filename,

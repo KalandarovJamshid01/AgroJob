@@ -5,16 +5,17 @@ const Job = require("../model/job");
 const Type = require("./../model/jobType");
 const District = require("./../model/district");
 const Apply = require("./../model/apply");
+const AppError = require("./../utility/appError");
 const userRole = async (req, res, next) => {
   let user;
-
+  console.log(req.cookies.token);
   if (req.cookies.token) {
     await jwt.verify(
       req.cookies.token,
       process.env.JWT_SECRET,
       function (err, user) {
         if (err) {
-          return next(err(403, "Toke is invallid"));
+          return next(new AppError("Toke is invallid", 403));
         }
         req.user = user;
       }
