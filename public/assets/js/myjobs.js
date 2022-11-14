@@ -3,7 +3,7 @@ const district = document.querySelector("#districtInput");
 const districts = async (regionId) => {
   try {
     const res = await axios.get(
-      `http://localhost:8000/api/v1/regions/${regionId}`
+      `http://13.127.199.83:8000/api/v1/regions/${regionId}`
     );
     return res;
   } catch (error) {
@@ -28,7 +28,7 @@ const deleteJob = async (jobId) => {
   try {
     const res = await axios({
       method: "DELETE",
-      url: `http://127.0.0.1:8000/api/v1/jobs/${jobId}`,
+      url: `http://13.127.199.83:8000/api/v1/jobs/${jobId}`,
     });
     if (res.status === 204) {
       alert("Job deleteded successfully");
@@ -68,7 +68,7 @@ const updateJob = async (
 ) => {
   try {
     const res = await axios.patch(
-      `http://127.0.0.1:8000/api/v1/jobs/${jobId}`,
+      `http://13.127.199.83:8000/api/v1/jobs/${jobId}`,
       {
         title: title,
         body: body,
@@ -110,7 +110,7 @@ editContent.addEventListener("click", async (e) => {
     try {
       const job = await axios({
         method: "GET",
-        url: `http://localhost:8000/api/v1/jobs/${value}`,
+        url: `http://13.127.199.83:8000/api/v1/jobs/${value}`,
       });
       console.log(job);
       document.querySelector(".jobName").value = job.data.title;

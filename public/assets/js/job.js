@@ -3,7 +3,7 @@ const apply = async (jobId, userId) => {
   try {
     const res = await axios({
       method: "POST",
-      url: `http://127.0.0.1:8000/api/v1/applies/${jobId}`,
+      url: `http://13.127.199.83:8000/api/v1/applies/${jobId}`,
       data: {
         jobId: jobId,
         userId: userId,

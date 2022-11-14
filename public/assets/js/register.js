@@ -3,7 +3,7 @@ const district = document.querySelector("#districtInput");
 const districts = async (regionId) => {
   try {
     const res = await axios.get(
-      `http://localhost:8000/api/v1/regions/${regionId}`
+      `http://13.127.199.83:8000/api/v1/regions/${regionId}`
     );
     return res;
   } catch (error) {
@@ -36,7 +36,7 @@ const register = async (
   photo
 ) => {
   try {
-    const res = await axios.post("http://127.0.0.1:8000/api/v1/auth/signup", {
+    const res = await axios.post("http://13.127.199.83:8000/api/v1/auth/signup", {
       name: name,
       surname: surname,
       email: email,
@@ -52,7 +52,7 @@ const register = async (
     if (res.status === 200) {
       alert("Siz ro`yxatdan o`tdingiz. ");
       window.setTimeout(() => {
-        location.assign("http://127.0.0.1:8000/home");
+        location.assign("http://13.127.199.83:8000/home");
       }, 1000);
     } else {
       console.log(err.response.data.message);
