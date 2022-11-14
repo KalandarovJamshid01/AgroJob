@@ -185,6 +185,7 @@ const createType = async (req, res, next) => {
       path: "users",
       select: "name createdAt",
     });
+    console.log(types);
 
     res.render("createType", {
       user,

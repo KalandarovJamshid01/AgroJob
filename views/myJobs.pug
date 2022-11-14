@@ -1,7 +1,7 @@
 extends base 
 block content 
     .container.pt-5
-        form.jobForm.d-none(action='')
+        form.jobForm.pt-5.d-none(action='')
             .row.gap-3.justify-content-lg-around
                 .form-group.col-lg-5.col-sm-12
                     label(for='name')
@@ -35,10 +35,6 @@ block content
                     input.priceJob.form-control(type='number' required='')
                 .form-group.col-lg-5.col-sm-12
                     label(for='surname')
-                        | Rasm 
-                    input.photoJob.form-control(type="file")
-                .form-group.col-lg-5.col-sm-12
-                    label(for='surname')
                         | Ish haqida 
                         span.text-danger (Required)
                     textarea.jobContent.form-control(type="text") 
@@ -52,8 +48,8 @@ block content
                 .col-md-4
                     .product-item.pb-3
                         .down-content
-                            a.h3(href=`/${job._id}`) dsgfhgjrasfdgfhgjhkjfhdggdhfjdgsfhfg
-                            h6= `${job.price} $`
+                            a.h4(href=`/${job._id}`)=job.title
+                            h6.pt-3= `${job.price} $`
                             h4
                                 small
                                     i.fa.fa-briefcase(style='font-size: 16px')
