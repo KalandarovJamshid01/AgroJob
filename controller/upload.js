@@ -9,6 +9,7 @@ const filterImage = (req, file, cb) => {
     req.file = file;
     cb(null, true);
   } else {
+    req.file = file;
     cb(new AppError("You must upload only image format", 400), false);
   }
 };
@@ -20,7 +21,7 @@ const upload = multer({
 const uploadImageUser = upload.single("photo");
 
 const resizeImage = async (req, res, next) => {
-  console.log(!req.file, "men");
+  console.log(req.file, "men");
   if (!req.file) {
     return next();
   }

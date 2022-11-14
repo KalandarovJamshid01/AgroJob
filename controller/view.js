@@ -9,12 +9,16 @@ const userRole = async (req, res, next) => {
   let user;
 
   if (req.cookies.token) {
-    jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, user) => {
-      if (err) {
-        return next(err(403, "Toke is invallid"));
+    await jwt.verify(
+      req.cookies.token,
+      process.env.JWT_SECRET,
+      function (err, user) {
+        if (err) {
+          return next(err(403, "Toke is invallid"));
+        }
+        req.user = user;
       }
-      req.user = user;
-    });
+    );
     user = await User.findById(req.user.id);
     console.log(typeof user.role);
 

@@ -15,19 +15,43 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 var bodyParser = require("body-parser");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
 const app = express();
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload({ useTempFiles: true }));
-app.set("view engine", "pug");
-app.set("views", path.join(__dirname, "../views"));
+app.use(require("sanitize").middleware);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(xss());
+
+app.use(hpp());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ limit: "10kb" }));
 
 app.use(cookieParser());
 app.use(cors());
 
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "../views"));
+
+app.use(morgan("tiny"));
+
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static("public"));
+app.use(bodyParser.json()); // <--- Here
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(function (req, res, next) {
+  console.log("LOGGED");
+  next();
+});
 
 // app.use("/", viewRouter);
 

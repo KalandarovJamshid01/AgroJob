@@ -1,10 +1,10 @@
-const User = require('../models/userModel');
-const catchErrorAsync = require('../utility/catchErrorAsync');
-const jwt = require('jsonwebtoken');
-const AppError = require('../utility/appError');
-const bcrypt = require('bcryptjs');
-const mail = require('../utility/mail');
-const crypto = require('crypto');
+const User = require("../models/userModel");
+const catchErrorAsync = require("../utility/catchErrorAsync");
+const jwt = require("jsonwebtoken");
+const AppError = require("../utility/appError");
+const bcrypt = require("bcryptjs");
+const mail = require("../utility/mail");
+const crypto = require("crypto");
 
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -13,10 +13,10 @@ const createToken = (id) => {
 };
 
 const saveTokenCookie = (token, res, req) => {
-  res.cookie('jwt', token, {
+  res.cookie("jwt", token, {
     maxAge: 24 * 60 * 60 * 1000,
     httpOnly: true,
-    secure: req.protocol === 'https' ? true : false,
+    secure: req.protocol === "https" ? true : false,
   });
 };
 
@@ -35,18 +35,18 @@ const signup = catchErrorAsync(async (req, res, next) => {
   saveTokenCookie(token, res, req);
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     token: token,
     data: newUser,
   });
 });
 
 const logout = (req, res, next) => {
-  res.cookie('jwt', 'loggedOut', {
+  res.cookie("jwt", "loggedOut", {
     httpOnly: true,
   });
   res.status(200).json({
-    status: 'success',
+    status: "success",
   });
 };
 
@@ -54,17 +54,17 @@ const login = async (req, res, next) => {
   // 1) Email bilan password borligini tekshirish
 
   const { email, password } = { ...req.body };
-  console.log('hello');
+  console.log("hello");
   console.log(email, password);
   if (!email || !password) {
-    return next(new AppError('Email yoki passwordni kiriting! Xato!!!', 401));
+    return next(new AppError("Email yoki passwordni kiriting! Xato!!!", 401));
   }
 
   // 2) Shunaqa odam bormi yuqmi shuni tekshirish
-  const user = await User.findOne({ email: email }).select('+password');
+  const user = await User.findOne({ email: email }).select("+password");
   if (!user) {
     return next(
-      new AppError('Bunday user mavjud emas. Iltimos royxatdan uting!', 404)
+      new AppError("Bunday user mavjud emas. Iltimos royxatdan uting!", 404)
     );
   }
 
@@ -77,7 +77,7 @@ const login = async (req, res, next) => {
   if (!(await tekshirHashga(password, user.password))) {
     return next(
       new AppError(
-        'Sizning parol yoki loginingiz xato! Iltimos qayta urinib kuring!',
+        "Sizning parol yoki loginingiz xato! Iltimos qayta urinib kuring!",
         401
       )
     );
@@ -88,7 +88,7 @@ const login = async (req, res, next) => {
   saveTokenCookie(token, res, req);
   // 5) Response qaytarish
   res.status(200).json({
-    status: 'success',
+    status: "success",
     token: token,
   });
 };
@@ -98,14 +98,14 @@ const protect = catchErrorAsync(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    req.headers.authorization.startsWith("Bearer")
   ) {
-    token = req.headers.authorization.split(' ')[1];
+    token = req.headers.authorization.split(" ")[1];
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
   if (!token) {
-    return next(new AppError('Siz tizimga kirishingiz shart!'));
+    return next(new AppError("Siz tizimga kirishingiz shart!"));
   }
   // 2) Token ni tekshirish Serverniki bilan clientnikini solishtirish
 
@@ -118,7 +118,7 @@ const protect = catchErrorAsync(async (req, res, next) => {
   if (!user) {
     return next(
       new AppError(
-        'Bunday user mavjud emas. Iltimos tizimga qayta kiring!',
+        "Bunday user mavjud emas. Iltimos tizimga qayta kiring!",
         401
       )
     );
@@ -131,7 +131,7 @@ const protect = catchErrorAsync(async (req, res, next) => {
     if (user.passwordChangedDate.getTime() / 1000 > tokencha.iat) {
       return next(
         new AppError(
-          'Sizning tokeningiz yaroqsiz! Iltimos qayta tizimga kiring!',
+          "Sizning tokeningiz yaroqsiz! Iltimos qayta tizimga kiring!",
           401
         )
       );
@@ -184,7 +184,7 @@ const role = (roles) => {
     // 1) User ni roleni olamiz databasedan, tekshiramiz
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError('Siz bu amaliyotni bajarish huquqiga ega emassiz!', 401)
+        new AppError("Siz bu amaliyotni bajarish huquqiga ega emassiz!", 401)
       );
     }
     next();
@@ -195,7 +195,7 @@ const forgotPassword = catchErrorAsync(async (req, res, next) => {
   // 1) Email bor yuqligini tekshirish
   if (!req.body.email) {
     return next(
-      new AppError('Emailni kiritishingiz Shart! Iltimos Emailni kiriting!')
+      new AppError("Emailni kiritishingiz Shart! Iltimos Emailni kiriting!")
     );
   }
   // 2) user email orqali database dan qidirish
@@ -203,7 +203,7 @@ const forgotPassword = catchErrorAsync(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new AppError('Bunday foydalanuvchi malumotlar bazasida mavjud emas!', 404)
+      new AppError("Bunday foydalanuvchi malumotlar bazasida mavjud emas!", 404)
     );
   }
 
@@ -216,18 +216,18 @@ const forgotPassword = catchErrorAsync(async (req, res, next) => {
   // 4) Email ga junatish resetToken ni
 
   const resetLink = `${req.protocol}://${req.get(
-    'host'
+    "host"
   )}/api/v1/users/resetPassword/${token}`;
 
-  const subject = 'Reset password qilish uchun link';
+  const subject = "Reset password qilish uchun link";
   const html = `<h1>Siz passwordni reset qilish uchun quydagi tugamani bosing</h1> <a style="color:red; background-color: white" href='${resetLink}'>Reset Password</a>`;
   const to = req.body.email;
 
   await mail({ subject, html, to });
 
   res.status(200).json({
-    status: 'Success',
-    message: 'Your token has been sent to Email',
+    status: "Success",
+    message: "Your token has been sent to Email",
   });
 
   next();
@@ -236,7 +236,7 @@ const forgotPassword = catchErrorAsync(async (req, res, next) => {
 const resetPassword = catchErrorAsync(async (req, res, next) => {
   // 1) Token olamiz
   const token = req.params.token;
-  const hashToken = crypto.createHash('sha256').update(token).digest('hex');
+  const hashToken = crypto.createHash("sha256").update(token).digest("hex");
 
   // 2) Token tekshiramiz -> tugri notugri ekanligi va vaqt utib ketmaganligi
   const user = await User.findOne({
@@ -247,7 +247,7 @@ const resetPassword = catchErrorAsync(async (req, res, next) => {
   if (!user) {
     return next(
       new AppError(
-        'Tokenda xatolik mavjud. Iltimos qayta passwordni unutdim qiling!',
+        "Tokenda xatolik mavjud. Iltimos qayta passwordni unutdim qiling!",
         404
       )
     );
@@ -255,11 +255,11 @@ const resetPassword = catchErrorAsync(async (req, res, next) => {
 
   // 3) Yangi parol ni saqlaymiz va yangi parolni vaqtni ham saqlaymiz
   if (!req.body.password || !req.body.passwordConfirm) {
-    return next(new AppError('Siz parolni kiritishingiz shart!', 404));
+    return next(new AppError("Siz parolni kiritishingiz shart!", 404));
   }
 
   if (!(req.body.password === req.body.passwordConfirm)) {
-    return next(new AppError('Kiritilgan parollar bir biriga mos emas!', 404));
+    return next(new AppError("Kiritilgan parollar bir biriga mos emas!", 404));
   }
 
   user.password = req.body.password;
@@ -277,9 +277,9 @@ const resetPassword = catchErrorAsync(async (req, res, next) => {
   saveTokenCookie(token, res, req);
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     token: tokenJWT,
-    message: 'Password yangilandi',
+    message: "Password yangilandi",
   });
   next();
 });
@@ -289,15 +289,15 @@ const updatePassword = catchErrorAsync(async (req, res, next) => {
 
   if (req.body.password === req.body.newPassword) {
     return next(
-      new AppError('Yangi password eskisi bilan birxil bulmasligi kerak', 401)
+      new AppError("Yangi password eskisi bilan birxil bulmasligi kerak", 401)
     );
   }
 
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.user.id).select("+password");
   if (!user) {
     return next(
       new AppError(
-        'Malumotlar bazidan topilmadingiz, iltimos qayta tizimga kiring',
+        "Malumotlar bazidan topilmadingiz, iltimos qayta tizimga kiring",
         401
       )
     );
@@ -305,7 +305,7 @@ const updatePassword = catchErrorAsync(async (req, res, next) => {
   // 2) check password posted
 
   if (!(await bcrypt.compare(req.body.password, user.password))) {
-    return next(new AppError('Eski passwordni notugri kiritdingiz', 401));
+    return next(new AppError("Eski passwordni notugri kiritdingiz", 401));
   }
   // 3) update password
   user.password = req.body.newPassword;
@@ -317,9 +317,9 @@ const updatePassword = catchErrorAsync(async (req, res, next) => {
   const token = createToken(user._id);
   saveTokenCookie(res, tokenJWT);
   res.status(200).json({
-    status: 'success',
+    status: "success",
     token: token,
-    message: 'Your password has been updated!',
+    message: "Your password has been updated!",
   });
 });
 

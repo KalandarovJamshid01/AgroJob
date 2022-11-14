@@ -34,31 +34,36 @@ const addJob = async (
   photo
 ) => {
   try {
-    const res = await axios.post("http://127.0.0.1:8000/api/v1/jobs/", {
-      title: title,
-      body: body,
-      price: price,
-      userId: userId,
-      typeId: typeId,
-      regionId: regionId,
-      districtId: districtId,
-      photo: photo,
+    console.log(photo + "..................");
+    let formData = new FormData();
+    formData.append("title", title);
+    formData.append("body", body);
+    formData.append("price", price);
+    formData.append("userId", userId);
+    formData.append("typeId", typeId);
+    formData.append("reionId", regionId);
+    formData.append("districtId", districtId);
+    formData.append("photo", photo);
+    const res = await axios({
+      method: "POST",
+      url: "http://127.0.0.1:8000/api/v1/jobs/",
+      Headers:{"Content-Type":"multipart/form-data"},
+      formData,
     });
     console.log(res);
     if (res.status === 201) {
       alert("Ish yaratildi");
       window.setTimeout(() => {
-        location.assign("http://127.0.0.1:8000/myJobs");
+        location.assign("/myJobs");
       }, 1000);
     } else {
-      console.log(err.response.data.message);
+      console.log(err);
       alert(`Xatolik yuz berdi.
-    Error: ${err.response.data.message}`);
+    Error: ${err.response}`);
     }
   } catch (err) {
     console.log(err);
-    alert(`Xatolik yuz berdi.xati
-    Error: ${err.response.data.message}`);
+    alert(`Xatolik yuz berdi.xati`);
   }
 };
 
