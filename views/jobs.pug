@@ -36,11 +36,9 @@ block content
                         each job in jobs
                             .col-md-4
                                 .product-item
-                                    a(href=`/${job._id}`)
-                                        img.img-fluid(src=`${job.photo}` alt='okay')
                                     .down-content
-                                        a(href=`/${job_id}`)
-                                            h4= job.title
+                                        a(href=`/${job._id}`)
+                                            h3= job.title
                                         h6= `${job.price} $`
                                         h4
                                             small

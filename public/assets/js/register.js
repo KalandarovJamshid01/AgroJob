@@ -50,7 +50,7 @@ const register = async (
     });
     console.log(res);
     if (res.status === 200) {
-      alert("Siz ro`yxatdan o`tdingiz. Telegram kanalimizga qo`shiling");
+      alert("Siz ro`yxatdan o`tdingiz. ");
       window.setTimeout(() => {
         location.assign("http://127.0.0.1:8000/home");
       }, 1000);

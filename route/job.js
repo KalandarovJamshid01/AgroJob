@@ -1,11 +1,10 @@
 const router = require("express").Router();
 const job = require("../controller/job");
-const { resizeImage, uploadImageUser } = require("../controller/upload");
 const verify = require("../verify");
 router
   .route("/")
   .get(job.getAll)
-  .post(verify, uploadImageUser, resizeImage, job.add);
+  .post(verify, job.add);
 
 router
   .route("/:id")

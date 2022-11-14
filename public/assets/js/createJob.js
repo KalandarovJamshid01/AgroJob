@@ -30,30 +30,21 @@ const addJob = async (
   userId,
   typeId,
   regionId,
-  districtId,
-  photo
+  districtId
 ) => {
   try {
-    console.log(photo + "..................");
     let formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
     formData.append("price", price);
     formData.append("userId", userId);
     formData.append("typeId", typeId);
-    formData.append("reionId", regionId);
+    formData.append("regionId", regionId);
     formData.append("districtId", districtId);
-    formData.append("photo", photo);
-    const res = await axios({
-      method: "POST",
-      url: "http://127.0.0.1:8000/api/v1/jobs/",
-      Headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: "application/json",
-      },
-      formData,
-    });
-    console.log(res);
+    const res = await axios.post(
+      "http://127.0.0.1:8000/api/v1/jobs/",
+      formData
+    );
     if (res.status === 201) {
       alert("Ish yaratildi");
       window.setTimeout(() => {
@@ -61,12 +52,17 @@ const addJob = async (
       }, 1000);
     } else {
       console.log(err);
-      alert(`Xatolik yuz berdi.
-    Error: ${err.response}`);
+      alert(`Xatolik yuz berdi.`);
+      window.setTimeout(() => {
+        location.reload();
+      }, 1000);
     }
   } catch (err) {
     console.log(err);
-    alert(`Xatolik yuz berdi.xati`);
+    alert(`Xatolik yuz berdi.`);
+    window.setTimeout(() => {
+      location.reload();
+    }, 1000);
   }
 };
 
@@ -81,8 +77,6 @@ jobForm.addEventListener("submit", (e) => {
   const typeId = document.querySelector(".jobType").value;
   const regionId = region.value;
   const districtId = district.value;
-  const photo = document.querySelector(".photoJob").value;
-
-  console.log(title, body, price, userId, regionId, districtId, photo, typeId);
-  addJob(title, body, price, userId, typeId, regionId, districtId, photo);
+  console.log(title, body, price, userId, regionId, districtId, typeId);
+  addJob(title, body, price, userId, typeId, regionId, districtId);
 });

@@ -211,12 +211,14 @@ const myJobs = async (req, res, next) => {
         path: "type",
         select: "name",
       });
+    console.log(jobs);
     const regions = await Region.find().populate({
       path: "districts",
       select: "name_uz _id",
     });
-
     const jobTypes = await Type.find();
+    console.log(jobTypes);
+
     res.render("myJobs", {
       user,
       jobs,

@@ -20,7 +20,6 @@ const helmet = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const app = express();
-app.use(require("sanitize").middleware);
 
 app.use(xss());
 
@@ -32,8 +31,9 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: "10kb" }));
-app.use(express.urlencoded({ limit: "10kb" }));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(fileUpload({ useTempFiles: true }));
 
 app.use(cookieParser());
 app.use(cors());

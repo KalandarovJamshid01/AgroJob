@@ -31,10 +31,6 @@ const jobSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    photo: {
-      type: String,
-      default: "user",
-    },
     time: {
       type: String,
     },
