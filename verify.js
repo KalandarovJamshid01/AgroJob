@@ -9,7 +9,7 @@ module.exports = verifyToken = async (req, res, next) => {
   }
   await jwt.verify(userToken, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return next(error(403, "Toke is invallid"));
+      return next(error(403, "Token is invallid"));
     }
     req.user = user;
     next();
